@@ -91,7 +91,7 @@ for i in ${CLUSTER_LIST}
       echo "
 - id: kubectl-apply-${i}
   name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'nginx.yaml']
+  args: ['apply', '-f', 'k8s/']
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=${i}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${CLUSTER_NAME}'" >> cloudbuild.temp.yaml
