@@ -98,7 +98,9 @@ for i in ${CLUSTER_LIST}
 done
 
 ## To submit a build using the build config
+TEMPO_SHA=$(echo -n $(date) | sha256sum | cut -c -7)
 cat ../cloudbuild.yaml cloudbuild.temp.yaml > cloudbuild.merged.yaml
 
-gcloud container builds submit --config cloudbuild.merged.yaml ../
+gcloud container builds submit --config cloudbuild.merged.yaml \
+--substitutions=REPO_NAME=rainbow-app,BRANCH_NAME=bootstrap,SHORT_SHA=${TEMPO_SHA} ../
 
