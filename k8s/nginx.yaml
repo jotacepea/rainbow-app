@@ -39,4 +39,4 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
-    nodeport:30080 # Reserved NodePort!!!
+    nodeport: 30080 # Reserved NodePort!!!
