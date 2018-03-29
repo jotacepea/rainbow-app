@@ -97,6 +97,14 @@ for i in ${CLUSTER_LIST}
   - 'CLOUDSDK_CONTAINER_CLUSTER=${CLUSTER_NAME}'" >> cloudbuild.temp.yaml
 done
 
+## Allow Cloud Builder access to the k8s clusters
+MY_PROJECT="$(gcloud projects describe \
+    $(gcloud config get-value core/project -q) --format='get(projectNumber)')"
+
+gcloud projects add-iam-policy-binding $MY_PROJECT \
+    --member=serviceAccount:$MY_PROJECT@cloudbuild.gserviceaccount.com \
+    --role=roles/container.developer
+
 ## To submit a build using the build config
 TEMPO_SHA=$(echo -n $(date) | sha256sum | cut -c -7)
 cat ../cloudbuild.yaml cloudbuild.temp.yaml > cloudbuild.merged.yaml
